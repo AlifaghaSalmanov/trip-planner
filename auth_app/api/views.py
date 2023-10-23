@@ -64,7 +64,7 @@ class UserRegisterAPIView(views.APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=400)
 
-        user = User.objects.create_customer(**serializer.validated_data)
+        user = User.objects.create(**serializer.validated_data)
 
         expire_time = user.send_confirmation_code()
 

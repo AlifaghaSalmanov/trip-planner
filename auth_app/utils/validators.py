@@ -15,11 +15,13 @@ class AppTokenGenerator(PasswordResetTokenGenerator):
 
 account_activation_token = AppTokenGenerator()
 
-
-
-def phone_number(data):
-    if not check_phone_number(data):
-        raise serializers.ValidationError("Wrong Phone Number")
+@deconstructible
+class PhoneNumberValidator(validators.RegexValidator):
+    regex = r'^\+?[0-9]{9,15}$'
+    message = _(
+        'Phone number is invalid. This may contain only digits. Allowed length is 9 - 15'
+    )
+    flags = 0
 
 
 def password_validator(data):
